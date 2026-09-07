@@ -2,10 +2,30 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Meu site mágico</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Autorizando Mercado Livre</title>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #071126; color: #eaf0ff; font: 16px Arial, sans-serif; }
+    main { width: min(560px, calc(100% - 32px)); padding: 28px; border: 1px solid #2788d9; border-radius: 16px; background: #0d1b39; box-sizing: border-box; }
+    h1 { margin-top: 0; font-size: 22px; }
+    p { line-height: 1.5; }
+  </style>
 </head>
 <body>
-  <h1>Olá, universo!</h1>
-  <p>Se você está vendo isso, a mágica do GitHub Pages funciona.</p>
+  <main>
+    <h1>Concluindo autorização</h1>
+    <p id="status">Estamos encaminhando o retorno para o painel. Não feche esta aba.</p>
+  </main>
+  <script>
+    (function () {
+      var target = 'http://localhost:8081/mercadolivre_oauth_callback.php' + window.location.search;
+      var params = new URLSearchParams(window.location.search);
+      if (params.has('code') || params.has('error')) {
+        window.location.replace(target);
+        return;
+      }
+      document.getElementById('status').textContent = 'Nenhum retorno de autorização foi encontrado. Volte ao painel e clique em Validar conexão.';
+    }());
+  </script>
 </body>
 </html>
